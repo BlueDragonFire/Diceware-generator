@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,13 +10,13 @@ public class Main
 {
     public static void main( String[] args )
     {
-        String path = "src/eff_large_wordlist.txt";
+
         Main m = new Main();
         List<String> list = new ArrayList<>();
 
-        try
+        try(BufferedReader br = new BufferedReader( new InputStreamReader(Main.class.getResourceAsStream("eff_large_wordlist.txt")) ))
         {
-            BufferedReader br = new BufferedReader( new FileReader( path ) );
+
             Scanner input = new Scanner( System.in );
             String st;
 
@@ -34,11 +31,16 @@ public class Main
 
             ArrayList<String> numList = m.randomiser( wordCount );
 
+            System.out.println();
+
             for ( String i : numList )
             {
                 m.regexer( list, i );
                 //System.out.println("hey" + i);
             }
+
+            System.out.println();
+            System.out.println();
 
         }
         catch ( FileNotFoundException ex ) {ex.printStackTrace();}
@@ -73,14 +75,14 @@ public class Main
        ArrayList<String> list = new ArrayList<>();
 
        Random rand = new Random();
-       int a = 0;
+       int a;
 
        for ( int i = 0; i < x; i++ )
        {
            for ( int j = 0; j < 5; j++ )
            {
                a = rand.nextInt(6) + 1;
-               single += Integer.toString(a);
+               single = single.concat(Integer.toString(a));
            }
            list.add(single);
            //System.out.println(single);
